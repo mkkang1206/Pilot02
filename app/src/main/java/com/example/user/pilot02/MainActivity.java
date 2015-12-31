@@ -221,15 +221,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -248,12 +245,8 @@ public class MainActivity extends AppCompatActivity
     Button quickButton;
     Button menualButton;
     //---------------------//
-    ListView mListView;
 
-    TextView textView01;
-    View viewPager;
-    private LayoutInflater mInflater;
-    private ItemListAdapter adapter01;
+    int menuNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -292,6 +285,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 pager.setCurrentItem(0);
+                menuNum = 0;
             }
         });
 
@@ -299,6 +293,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 pager.setCurrentItem(1);
+                menuNum = 1;
             }
         });
         //---------------------//
@@ -349,7 +344,6 @@ public class MainActivity extends AppCompatActivity
                     Log.d("case 2", Integer.toString(position));
 
                     container.addView(detailView, position);
-
                     return detailView;
 
                 default:return null;
@@ -372,7 +366,18 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(pager.getCurrentItem()==1)
+            {
+                pager.setCurrentItem(0);
+            }else if(pager.getCurrentItem()==2&&menuNum == 0)
+            {
+                pager.setCurrentItem(0);
+            }else if(pager.getCurrentItem()==2&&menuNum == 1)
+            {
+                pager.setCurrentItem(1);
+            }else {
+                super.onBackPressed();
+            }
         }
     }
 

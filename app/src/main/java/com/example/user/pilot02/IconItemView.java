@@ -1,8 +1,6 @@
 package com.example.user.pilot02;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -26,14 +24,14 @@ public class IconItemView extends LinearLayout{
         inflater.inflate(R.layout.list_item, this, true);
 
         mIcon = (ImageView) findViewById(R.id.imageIcon);
-        Resources res = getResources();
-        BitmapDrawable mNoImage = (BitmapDrawable) res.getDrawable(R.drawable.image_not_found);
+//        Resources res = getResources();
+//        BitmapDrawable mNoImage = (BitmapDrawable) res.getDrawable(R.drawable.image_not_found);
 
         //Glide.with(getContext()).load(aItem.getIcon()).into(mIcon);
 
         if(aItem.getIcon().length()==0){
 
-            mIcon.setImageDrawable(mNoImage);
+            mIcon.setImageResource(R.drawable.image_not_found);
         }else {
             Glide.with(getContext()).load(aItem.getIcon()).into(mIcon);
         }
@@ -68,7 +66,10 @@ public class IconItemView extends LinearLayout{
     }
 
     public void setIcon(String icon) {
-
+        if(icon.length()==0){
+            mIcon.setImageResource(R.drawable.image_not_found);
+        }else {
         Glide.with(getContext()).load(icon).into(mIcon);
+        }
     }
 }
